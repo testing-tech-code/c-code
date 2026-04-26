@@ -68,7 +68,7 @@ int kv_put(kv_t *db, char *key, char *value) {
             entry->key != (void*)TOMBSTONE &&
             !strcmp(entry->key,key)){
                 char *newval = strdup(value);
-                if(!newval) return -1;
+                if (!newval) return -1;
                 entry->value = newval;
                 return real_idx; 
         }
