@@ -3,6 +3,8 @@
 #include <stdlib.h>
 
 #define TOMBSTONE 0x1
+#define _GNU_SOURCE
+
 
 
 size_t hash(char *val,int capacity){
