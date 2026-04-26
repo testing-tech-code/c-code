@@ -31,7 +31,7 @@ int kv_delete(kv_t *db, char *key) {
     if (!db || !key ) return -1;
 
     size_t idx = hash(key, db->capacity);
-     for (size_t i = 0; i < db->capacity -1; i++){
+     for (int i = 0; i < db->capacity -1; i++){
         size_t real_idx = (idx + i) % db->capacity;
         kv_entry_t *entry = &db->entries[real_idx];
 
@@ -64,7 +64,7 @@ char *kv_get(kv_t *db, char *key) {
     if (!db || !key ) return NULL;
 
     size_t idx = hash(key, db->capacity);
-     for (size_t i = 0; i < db->capacity -1; i++){
+     for (int i = 0; i < db->capacity -1; i++){
         size_t real_idx = (idx + i) % db->capacity;
         kv_entry_t *entry = &db->entries[real_idx];
 
@@ -116,49 +116,45 @@ void kv_free(kv_t *db){
 //  - vaule: a porinter to the vaule itself
 // return: the index of the key, otherwiae, on
 // error, retruns -1, on not found returns -2 
-int kv_put(kv_t *db, const char *key, const char *value) {
+int kv_put(kv_t *db, char *key, char *value) {
     if (!db || !key || !value) return -1;
 
-    size_t idx = hash((char*)key, db->capacity); // Cast to avoid warnings
+    size_t idx = hash(key, db->capacity);
 
-    for (size_t i = 0; i < db->capacity; i++) { // Fixed loop condition
+    for (int i = 0; i < db->capacity -1; i++){
+        
         size_t real_idx = (idx + i) % db->capacity;
         kv_entry_t *entry = &db->entries[real_idx];
 
-        // If we found an existing key, update the value
         if (entry->key &&
             entry->key != (void*)TOMBSTONE &&
-            !strcmp(entry->key, key)) {
-            char *newval = strdup(value);
-            if (!newval) return -1;
-            free(entry->value);
-            entry->value = newval;
-            return real_idx;
+            !strcmp(entry->key,key)){
+                char *newval = strdup(value);
+                if (!newval) return -1;
+                free(entry->value);
+                entry->value = newval;
+                return real_idx; 
         }
 
-        // If we found an empty slot or tombstone, insert new key-value
-        if (!entry->key || entry->key == (void*)TOMBSTONE) {
-            char *newkey = strdup(key);
+        if (!entry->key || entry->key == (void*)TOMBSTONE){
             char *newval = strdup(value);
-            if (!newkey || !newval) {
+            char *newkey = strdup(key);
+            if(!newval || !newkey) {
                 free(newkey);
                 free(newval);
                 return -1;
             }
-            entry->key = newkey;
-            entry->value = newval;
-            db->count++;
-            return real_idx;
+                entry->value = newval;
+                entry->key = newkey;
+                db->count++;
+                return real_idx;
         }
     }
+    // the db is occupied
+    return -2; 
 
-    // No space left in the table
-    return -2;
+
 }
-
-
-
-
 
 kv_t *kv_init(size_t capacity){
     if (capacity == 0) return NULL;
