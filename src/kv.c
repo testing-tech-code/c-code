@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define TOMBSTONE ((char *)0x1)
+#define TOMBSTONE 0x1
 
 
 size_t hash(char *val,int capacity){
@@ -16,6 +16,35 @@ size_t hash(char *val,int capacity){
         val++;
     }
     return hash % capacity;
+}
+
+// fn kv_get
+// prams:
+//  - db: a pointer to the db
+//  - Kay: a pointer to the key value
+//  - vaule: a porinter to the vaule itself
+// return: the pointer to the key
+// Null if not found
+char *kv_get(kv_t *db, char *key) {
+    if (!db || !key ) return NULL;
+
+    size_t idx = hash(key, db->capacity);
+     for (int i = 0; i < db->capacity -1; i++){
+        size_t real_idx = (idx + i) % db->capacity;
+        kv_entry_t *entry = &db->entries[real_idx];
+
+        // is no key, therefor retrun nothing
+         if (entry->key == NULL ) {
+            return NULL;
+         }
+
+         // find an entry and the keys match
+         if (entry->key && entry->key != (void*)TOMBSTONE && !strcmp(entry->key, key)) {
+            return entry->value;
+         }
+     }
+
+     return NULL;
 }
 
 // fn kv_put
