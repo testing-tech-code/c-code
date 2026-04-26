@@ -21,13 +21,18 @@ int main(){
 
     printf("%s %s %s\n", val, val2, val3);
 
-    for (int i = 0; i < table->capacity; i++){
-        if (table->entries[i].key){
+    // for (int i = 0; i < table->capacity; i++){
+    //     if (table->entries[i].key){
             
-           printf("[%d] %s: %s\n",
-            i, 
-            table->entries[i].key, 
-            table->entries[i].value); 
-        }   
-    }
+    //        printf("[%d] %s: %s\n",
+    //         i, 
+    //         table->entries[i].key, 
+    //         table->entries[i].value); 
+    //     }   
+    // }
+
+    kv_delete(table,"hehe");
+    val = NULL;
+    val = kv_get(table,"hehe");
+    printf("%s %s %s\n", val, val2, val3);
 }
