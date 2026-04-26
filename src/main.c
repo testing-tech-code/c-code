@@ -11,6 +11,10 @@ int main(){
     kv_put(table, "hehe","hoho");
     kv_put(table, "lala","baba");
 
+    kv_put(table, "color","red");
+    kv_put(table, "color","blue");
+
+    
     char *val = kv_get(table,"hehe");
     char *val2 = kv_get(table,"lala");
     char *val3 = kv_get(table,"no");
