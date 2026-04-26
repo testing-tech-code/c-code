@@ -15,11 +15,11 @@ int main(){
     kv_put(table, "color","blue");
 
 
-    char *val = kv_get(table,"hehe");
-    char *val2 = kv_get(table,"lala");
-    char *val3 = kv_get(table,"no");
+    // char *val = kv_get(table,"hehe");
+    // char *val2 = kv_get(table,"lala");
+    // char *val3 = kv_get(table,"no");
 
-    printf("%s %s %s\n", val, val2, val3);
+    // printf("%s %s %s\n", val, val2, val3);
 
     // for (int i = 0; i < table->capacity; i++){
     //     if (table->entries[i].key){
@@ -31,25 +31,10 @@ int main(){
     //     }   
     // }
 
-    kv_delete(table,"hehe");
-    val = NULL;
-    val = kv_get(table,"hehe");
-    printf("%s %s %s\n", val, val2, val3);
-
-
-
-
-
-    kv_put(table, "name", "alice");
-    kv_put(table, "city", "berlin");
-
-    assert(kv_delete(table, "name") == 0);
-    assert(kv_get(table, "name") == NULL);
-    assert(table->count == 1);
-
-    assert(kv_delete(table, "missing") == -1);
-
-    kv_free(table);
+    // kv_delete(table,"hehe");
+    // val = NULL;
+    // val = kv_get(table,"hehe");
+    // printf("%s %s %s\n", val, val2, val3);
 
 
 
@@ -60,6 +45,6 @@ int main(){
     kv_free(table);
     table = NULL;
 
-    val = kv_get(table,"hehe");
-    printf("%s\n", val);
-}
+//     val = kv_get(table,"hehe");
+//     printf("%s\n", val);
+ }
