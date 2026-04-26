@@ -37,6 +37,26 @@ int main(){
     printf("%s %s %s\n", val, val2, val3);
 
 
+
+
+
+    kv_put(table, "name", "alice");
+    kv_put(table, "city", "berlin");
+
+    assert(kv_delete(table, "name") == 0);
+    assert(kv_get(table, "name") == NULL);
+    assert(table->count == 1);
+
+    assert(kv_delete(table, "missing") == -1);
+
+    kv_free(table);
+
+
+
+
+
+
+
     kv_free(table);
     table = NULL;
 
