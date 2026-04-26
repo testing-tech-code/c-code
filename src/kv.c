@@ -86,8 +86,8 @@ char *kv_get(kv_t *db, char *key) {
 // prams:
 //  - db: a pointer to the db
 // retruns: 0 on success, -1 on failure
-int kv_free(kv_t *db){
-    if (!db) return -1;
+void kv_free(kv_t *db){
+    if (!db) return;
 
 
     for(size_t i = 0; i < db->capacity -1; i++){
@@ -105,7 +105,7 @@ int kv_free(kv_t *db){
     free(db->entries);
     free(db);
 
-    return 0;
+    return;
 
 }
 
