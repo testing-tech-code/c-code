@@ -6,14 +6,15 @@
 typedef struct {
     char *key;
     char *value; 
-} KV_entry_t;
+} kv_entry_t;
 
 typedef struct {
     size_t capacity;
     size_t count;
-    KV_entry_t *entries;
+    kv_entry_t *entries;
 } kv_t;
 
 kv_t *kv_init(size_t capacity);
+int kv_put(kv_t *db, char *key, char *value);
 
 #endif
